@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "FastMovers";
+}
+
+<h2>FastMovers</h2>
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>

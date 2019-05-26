@@ -1,0 +1,555 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+            text-align:start;
+        }
+        a:hover{ cursor:pointer}
+</style>
+
+
+<script>
+    $(document).ready(function () {
+        var row = "firstRow";
+        $("#posativeDataTable tr:not(:first-child)").hide();
+        //$("#posativeDataTable tr").each(function () {
+        //    if (row != "firstRow")
+        //    {
+        //        $(this).hide(); 
+        //    }else
+        //    {
+        //        row = "secondRow";
+        //    }
+        //});
+
+        $('#posativeDataTable').hide();
+        $('#IoDataTable').hide();
+
+        $('#idposativeData').on("click", function () {
+            $('#posativeDataTable').show();
+            $('#IoDataTable').hide();
+            $('#DmaDataTable').hide();
+        });
+        $('#IoData').on("click", function () {
+            $('#posativeDataTable').hide();
+            $('#IoDataTable').show();
+            $('#DmaDataTable').hide();
+        });
+        $('#DmaData').on("click", function () {
+            $('#posativeDataTable').hide();
+            $('#IoDataTable').hide();
+            $('#DmaDataTable').show();
+        });
+        $("tr#trBanksList td").click(function (e) {
+            $('#posativeDataTable').show();
+            $("#posativeDataTable tr:not(:first-child)").hide();
+            $('#IoDataTable').hide();
+            $('#DmaDataTable').hide();
+            var name1 = $(this).text().trim().toLowerCase();
+            e.stopPropagation();
+            $("#posativeDataTable tr").each(function () {
+                var name2 = $(this).closest('tr').attr('id');
+                if (name2 != null && name1 != null) {
+                    if (name1.trim().toLowerCase() == name2.trim().toLowerCase()) {
+                       $(this).closest('tr').show();
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+
+
+<a id="idposativeData" onclick="">Posative Data</a>
+<a id="IoData" onclick="">OI Data</a>
+<a id="DmaData" onclick="">DMA Data</a>
+
+<table >
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            @Html.Raw("Code")
+                        </td>
+                        <td>
+                            @Html.Raw("W")
+                        </td>
+                    </tr>
+
+                </thead>
+                @foreach (var item in Model.PosativeData.GroupBy(g => new { g.Code }).Select(g => g.First()).ToList().OrderByDescending(x=>Convert.ToDecimal(x.BNWeigtage)).ToList())
+                {
+                <tr id="trBanksList">
+                    <td id="@item.Code">
+                        <a> @Html.Raw(item.Code)</a> <br />
+                    </td>
+                    <td>
+                        @Html.Raw(item.BNWeigtage)
+                        <br />
+                    </td>
+                </tr>
+                }
+            </table>
+        </td>
+        <td style="vertical-align:top">
+            <table id="posativeDataTable">
+                <tr>
+                    <td style="vertical-align:top">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        @Html.Raw("Time")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("lastPrice")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("Open")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("Low")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("High")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("totalBuyQuantity")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("totalSellQuantity")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("Volume")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("P(%)")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("TotalVolume")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("Volume(%)")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("Fast(%)")
+                                    </td>
+
+                                    <td>
+                                        @Html.Raw("Code")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("Id")
+                                    </td>
+                                </tr>
+
+                            </thead>
+                            <tr>
+                            </tr>
+                            @foreach (var item in Model.PosativeData.Where(x => x.Code != null))
+                            {
+                            <tr id="@item.Code">
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.BasicSavedTimeStamp)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.lastPrice)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.Open)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.Low)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.High)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.totalBuyQuantity)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.totalSellQuantity)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.TotalVolume)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.pChange)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.CalcDayVolume)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.CurrentPrevdayVolumePercentage)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.fastPercentage)
+                                </td>
+                                <td style="background-color:darkgray">
+                                    @Html.ActionLink(item.Code, "Index", "List", new { id = item.Code }, new { target = "_blank" })
+                                    </td>
+                                <td style="background-color:darkgray">
+                                    @Html.Raw(item.Id)
+                                </td>
+                            </tr>
+                            }
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
+            <table id="IoDataTable">
+                <tr>
+                    <td style="vertical-align:top">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        @Html.Raw("Time")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("PChange")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("PchangeinOpenInterest")
+                                    </td>
+                                    @*<td>
+                                    @Html.Raw("LastPrice")
+                                    </td>
+                                    <td>
+                                    @Html.Raw("HighPrice")
+                                    </td>
+                                    <td>
+                                    @Html.Raw("LowPrice")
+                                    </td>*@
+
+                                </tr>
+
+                            </thead>
+
+                            @foreach (var item in Model.CheckPriceStrongOIStroing.Where(x => x.CompanyCode != null))
+                            {
+                            <tr>
+                                <td>
+                                    @Html.Raw(item.OISavedTimeStamp)
+                                </td>
+                                <td>
+                                    @Html.Raw(item.PChange)
+                                </td>
+                                <td>
+                                    @Html.Raw(item.PchangeinOpenInterest)
+                                </td>
+                                @*<td>
+                                @Html.Raw(item.LastPrice)
+                                </td>
+                                <td>
+                                @Html.Raw(item.HighPrice)
+                                </td>
+                                <td>
+                                @Html.Raw(item.LowPrice)
+                                </td>*@
+                            </tr>
+                            }
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
+            <table id="DmaDataTable">
+                <tr>
+                    <td style="vertical-align:top">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        @Html.Raw("RankSavedTimeStamp")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("LTPDate")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("LTP")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("5")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("10")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("20")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("30")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("50")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("100")
+                                    </td>
+                                    <td>
+                                        @Html.Raw("200")
+                                    </td>
+                                </tr>
+
+                            </thead>
+
+                            @foreach (var item in Model.UIDetailedDMA.Where(x => x.UniqueString != null))
+                            {
+                            <tr>
+                                <td>
+                                    @Html.Raw(item.RankSavedTimeStamp)
+                                </td>
+                                <td>
+                                    @Html.Raw(item.LTPDate)
+                                </td>
+
+
+
+
+                                @if (item.LTPColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.LTPValue)
+                                </td>
+                                }
+                                else if (item.LTPColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.LTPValue)
+                                </td>
+                                }
+                                else if (item.LTPColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.LTPValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+
+
+                                @if (item.FiveDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.FiveDMAValue)
+                                </td>
+                                }
+                                else if (item.FiveDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.FiveDMAValue)
+                                </td>
+                                }
+                                else if (item.FiveDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.FiveDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+
+
+                                @if (item.TenDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.TenDMAValue)
+                                </td>
+                                }
+                                else if (item.TenDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.TenDMAValue)
+                                </td>
+                                }
+                                else if (item.TenDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.TenDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+                                @if (item.TwentyDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.TwentyDMAValue)
+                                </td>
+                                }
+                                else if (item.TwentyDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.TwentyDMAValue)
+                                </td>
+                                }
+                                else if (item.TwentyDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.TwentyDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+
+                                @if (item.ThirtyDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.ThirtyDMAValue)
+                                </td>
+                                }
+                                else if (item.ThirtyDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.ThirtyDMAValue)
+                                </td>
+                                }
+                                else if (item.ThirtyDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.ThirtyDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+
+                                @if (item.FiftyDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.FiftyDMAValue)
+                                </td>
+                                }
+                                else if (item.FiftyDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.FiftyDMAValue)
+                                </td>
+                                }
+                                else if (item.FiftyDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.FiftyDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+
+
+
+                                @if (item.HundredDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.HundredDMAValue)
+                                </td>
+                                }
+                                else if (item.HundredDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.HundredDMAValue)
+                                </td>
+                                }
+                                else if (item.HundredDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.HundredDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+
+                                @if (item.TwoHundredDMAColour == "yellow")
+                                {
+                                <td style="background-color:yellow">
+                                    @Html.Raw(item.TwoHundredDMAValue)
+                                </td>
+                                }
+                                else if (item.TwoHundredDMAColour == "royalblue")
+                                {
+                                <td style="background-color:blue">
+                                    @Html.Raw(item.TwoHundredDMAValue)
+                                </td>
+                                }
+                                else if (item.TwoHundredDMAColour == "maroon")
+                                {
+                                <td style="background-color:red">
+                                    @Html.Raw(item.TwoHundredDMAValue)
+                                </td>
+                                }
+                                else
+                                {
+                                //
+                                }
+                            </tr>
+                            }
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

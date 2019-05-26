@@ -1,0 +1,272 @@
+﻿@model Entity.QueryBinder
+
+@{
+    ViewBag.Title = "BNNext";
+}
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+<h2>Call</h2> (@Model.CallOptionsNextBNData[0].underlyingValue)
+<table>
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            @Html.Raw("expiryDate")
+                        </td>
+                        <td>
+                            @Html.Raw("SavedTimeStamp")
+                        </td>
+                        <td>
+                            @Html.Raw("strikePrice")
+                        </td>
+                        <td>
+                            @Html.Raw("pchangeinOI")
+                        </td>
+
+                        <td>
+                            @Html.Raw("change")
+                        </td>
+
+                        <td>
+                            @Html.Raw("openInterest")
+                        </td>
+
+                        <td>
+                            @Html.Raw("vwap")
+                        </td>
+                        <td>
+                            @Html.Raw("lastPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("prevClose")
+                        </td>
+                        <td>
+                            @Html.Raw("openPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("highPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("lowPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("closePrice")
+                        </td>
+                    </tr>
+
+                </thead>
+
+                @foreach (var item in Model.CallOptionsNextBNData)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.expiryDate)
+                        </td>
+
+                        <td>
+                            @Html.Raw(item.SavedTimeStamp)
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            @Html.Raw(item.strikePrice)  @Html.Raw(item.optionType)
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            <span title="@item.pchangeinOpenInterest.Split('#')[1]">@item.pchangeinOpenInterest.Split('#')[0]</span>
+
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            <span title="@item.changeinOpenInterest.Split('#')[1]">@item.changeinOpenInterest.Split('#')[0]</span>
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            <span title="@item.openInterest.Split('#')[1]">@item.openInterest.Split('#')[0]</span>
+                        </td>
+
+                        <td>
+                            <span title="@item.vwap.Split('#')[1]">@item.vwap.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.lastPrice.Split('#')[1]">@item.lastPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.prevClose.Split('#')[1]">@item.prevClose.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.openPrice.Split('#')[1]">@item.openPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.highPrice.Split('#')[1]">@item.highPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.lowPrice.Split('#')[1]">@item.lowPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+                            @Html.Raw(item.closePrice)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+<h2>put</h2>(@Model.PutOptionsNextBNData[0].underlyingValue)
+<table>
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            @Html.Raw("expiryDate")
+                        </td>
+                        <td>
+                            @Html.Raw("SavedTimeStamp")
+                        </td>
+                        <td>
+                            @Html.Raw("strikePrice")
+                        </td>
+                        <td>
+                            @Html.Raw("pchangeinOI")
+                        </td>
+
+                        <td>
+                            @Html.Raw("change")
+                        </td>
+
+                        <td>
+                            @Html.Raw("openInterest")
+                        </td>
+
+                        <td>
+                            @Html.Raw("vwap")
+                        </td>
+                        <td>
+                            @Html.Raw("lastPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("prevClose")
+                        </td>
+                        <td>
+                            @Html.Raw("openPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("highPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("lowPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("closePrice")
+                        </td>
+                    </tr>
+
+                </thead>
+
+                @foreach (var item in Model.PutOptionsNextBNData)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.expiryDate)
+                        </td>
+
+                        <td>
+                            @Html.Raw(item.SavedTimeStamp)
+                        </td>
+
+                        <td style="background-color:@item.BackColor">
+                            @Html.Raw(item.strikePrice)  @Html.Raw(item.optionType)
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            <span title="@item.pchangeinOpenInterest.Split('#')[1]">@item.pchangeinOpenInterest.Split('#')[0]</span>
+
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            <span title="@item.changeinOpenInterest.Split('#')[1]">@item.changeinOpenInterest.Split('#')[0]</span>
+                        </td>
+                        <td style="background-color:@item.BackColor">
+                            <span title="@item.openInterest.Split('#')[1]">@item.openInterest.Split('#')[0]</span>
+                        </td>
+
+                        <td>
+                            <span title="@item.vwap.Split('#')[1]">@item.vwap.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.lastPrice.Split('#')[1]">@item.lastPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.prevClose.Split('#')[1]">@item.prevClose.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.openPrice.Split('#')[1]">@item.openPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.highPrice.Split('#')[1]">@item.highPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+
+                            <span title="@item.lowPrice.Split('#')[1]">@item.lowPrice.Split('#')[0]</span>
+                        </td>
+                        <td>
+                            @Html.Raw(item.closePrice)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+</table>
+

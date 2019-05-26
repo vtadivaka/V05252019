@@ -1,0 +1,84 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+
+
+
+<table>
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                
+                @foreach (var item in Model.MCData)
+                {
+                    string titlename = "";
+                    <tr>
+                       
+                            <td>
+                                <a href="@item.SourceDetails.MainLink" target='_blank'> <b> @Html.Raw(item.Code)</b></a> (@Html.Raw(item.BuyValue) - @Html.Raw(item.SellValue) - @Html.Raw(item.HoldValue) )
+                                
+                                @foreach (var actions in item.MCActions)
+                                {
+                                    titlename = titlename+ "\n" + "\n" + actions.Date + ": " + actions.Title;
+                                    if (actions.IsToday)
+                                    {   <br />
+                                        @Html.Raw(actions.Date) @Html.Raw("  ")  @Html.Raw(actions.Title)
+                                    }
+                                }
+                                <a href="@item.SourceDetails.CommentsLink" target='_blank' title="@titlename">All<b></b></a>
+                                @*@Html.ActionLink("ViewAll", "", "", new { id = "ViewAll" },
+ new { title = titlename })*@
+
+                            </td>
+                        
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+</table>
+

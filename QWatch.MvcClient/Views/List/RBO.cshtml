@@ -1,0 +1,106 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+
+<table>
+<thead>
+    <tr>
+        @foreach (var item in TempData["Urls"] as List<string>)
+        {
+          <td>
+              <div>
+                 <a target='_blank' href="@item.Split('#')[0]" >@item.Split('#')[1]</a>
+              </div>
+          </td>
+        }
+    </tr>
+</thead>
+</table>
+
+
+
+
+ <table>
+                    <tr>
+                        <td style="vertical-align:top">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            @Html.Raw("LTPDate")
+                                        </td>
+                                        <td>
+                                            @Html.Raw("Code")
+                                        </td>
+                                        <td>
+                                            @Html.Raw("LTPValue")
+                                        </td>
+                                        <td>
+                                            @Html.Raw("BOPercentage")
+                                        </td>
+                                        <td>
+                                            @Html.Raw("high52")
+                                        </td>
+                                        <td>
+                                            @Html.Raw("low52")
+                                        </td>
+                                    </tr>
+
+                                </thead>
+
+                                @foreach (var item in Model.RBOData)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.Raw(item.LTPDate)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(item.Code, "", new { id = item.Code })
+                                        </td>
+                                        <td>
+                                            @Html.Raw(item.LTPValue)
+                                        </td>
+                                        <td>
+                                            @Html.Raw(item.BOPercentage)
+                                        </td>
+                                        <td>
+                                            @Html.Raw(item.high52)
+                                        </td>
+                                        <td>
+                                            @Html.Raw(item.low52)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+

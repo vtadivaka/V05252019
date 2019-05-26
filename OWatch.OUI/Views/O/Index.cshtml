@@ -1,0 +1,61 @@
+﻿@model Entity.QueryBinder
+
+@{
+    ViewBag.Title = "OIndex";
+}
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+<table>
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            @Html.Raw("Name")
+                        </td>
+                    </tr>
+                </thead>
+                
+                <tr>
+            @foreach (var item in TempData["StkList"] as List<string>)
+            {
+                <td>
+                <div>
+                     @Html.ActionLink(item, "StkIndex", new { id = item })
+                </div>
+                </td>
+            }
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>

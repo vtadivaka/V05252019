@@ -1,0 +1,35 @@
+﻿@using GridMvc.Html
+@model IEnumerable<EntityData.Section>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+  
+</head>
+<body>
+    <hr />
+    <div>
+
+        @Html.Grid(Model).Columns(columns =>
+   {
+       columns.Add(c => c.SectionName)
+        .Titled("SectionName")
+         .Encoded(false)
+        .Sanitized(false)
+        .RenderValueAs(o => Html.ActionLink(o.SectionName, "LibraryData", new { id = o.SectionId }, new { @class = "" }));
+       columns.Add(c => c.TotalCount).Titled("TotalCount");
+       columns.Add(c => c.RequiredCount)
+       .Titled("RequiredCount");
+
+       columns.Add(c => c.CreatedDate).Titled("CreatedDate");
+       columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => Html.ActionLink("Edit", "ModifySection", new { id = o.SectionId }, new { @class = "btn btn-primary" }));
+   }).WithPaging(7).Sortable(true)
+    </div>
+</body>
+</html>

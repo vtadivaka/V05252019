@@ -1,0 +1,88 @@
+﻿@model Entity.QueryBinder
+
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+<!DOCTYPE html>
+
+<table id="AvgVolumnsDataTable">
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            @Html.Raw("Time")
+                        </td>
+                        <td>
+                            @Html.Raw("Code")
+                        </td>
+                        <td>
+                            @Html.Raw("BasciPercentage")
+                        </td>
+                        <td>
+                            @Html.Raw("BasciVolumes")
+                        </td>
+                        <td>
+                            @Html.Raw("IOPercentage")
+                        </td>
+                        <td>
+                            @Html.Raw("IOVolumns")
+                        </td>
+                    </tr>
+
+                </thead>
+
+                @foreach (var item in Model.AvgVolums.Where(x => x.Code != null))
+                {
+                    <tr>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.LTPDate)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.ActionLink(item.Code, "Index", "List", new { id = item.Code }, null)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicPercentage)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.TotalVolume)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.IOPercentage)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.OITotalVolume)
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+</table>

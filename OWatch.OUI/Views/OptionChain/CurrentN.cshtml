@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "CurrentN";
+}
+
+<h2>CurrentN</h2>
+@using GridMvc.Html
+@model IEnumerable<Entity.OptionChain2>
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+
+</head>
+<body>
+
+    <hr />
+    <div>
+
+        @Html.Grid(Model).Columns(columns =>
+     {
+         columns.Add(c => c.ExpiryDate).Titled("Expiry");
+         columns.Add(c => c.TimeStamp).Titled("TimeStamp");
+         //columns.Add(c => c.SourceName).Titled("SourceName");
+         columns.Add(c => c.Percentage).Titled("Per");
+
+         columns.Add(c => c.UnderlyingValue).Titled("Index");
+
+         columns.Add(c => c.total_cal_OI).Titled("cal_OI");
+         columns.Add(c => c.total_put_OI).Titled("put_OI");
+         columns.Add(c => c.total_cal_ChnginOI).Titled("cal_ChnginOI");
+         columns.Add(c => c.total_put_ChnginOI).Titled("put_ChnginOI");
+         columns.Add(c => c.total_cal_Volume).Titled("cal_Volume");
+         columns.Add(c => c.total_put_Volume).Titled("put_Volume");
+
+
+     }).WithPaging(30).Sortable(true)
+    </div>
+</body>
+</html>
+

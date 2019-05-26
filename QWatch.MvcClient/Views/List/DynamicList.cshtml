@@ -1,0 +1,243 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+<table>
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>Posative Data</thead>
+                @foreach (var item in Model.PosativeData.Where(x => x.Code != null))
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Code, "Index", "List", new { id = item.Code },
+ new { title = " pChange: " + item.pChange +  " lastPrice: " + item.lastPrice + " Open: " + item.Open + ", Low: " + item.Low + ", High: " + item.High + ", totalBuyQuantity: " + item.totalBuyQuantity + ", totalSellQuantity: " + item.totalSellQuantity + ", TotalVolume: " + item.TotalVolume })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>High Buying</thead>
+                @foreach (var item in Model.HighBuying.Where(x => x.Code != null))
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Code, "", new { id = item.Code },
+ new { title = " lastPrice: " + item.lastPrice + " totalBuyQuantity: " + item.totalBuyQuantity + ", totalSellQuantity: " + item.totalSellQuantity + ", Percentage: " + item.Percentage + ", pChange: " + item.pChange + ", Open: " + item.Open + ", Low: " + item.Low + ", High: " + item.High + ", TotalVolume: " + item.TotalVolume })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+
+
+
+
+
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Strong-Strong</thead>
+                @foreach (var item in Model.CheckPriceStrongOIStroing)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.CompanyCode, "", new { id = item.CompanyCode },
+ new { title = " PChange: " + item.PChange + ", PchangeinOpenInterest: " + item.PchangeinOpenInterest })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Strong-Week</thead>
+                @foreach (var item in Model.CheckPriceStrongOIWeek)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.CompanyCode, "", new { id = item.CompanyCode },
+ new { title = "PChange: " + item.PChange + ", PchangeinOpenInterest: " + item.PchangeinOpenInterest })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Negative Data</thead>
+                @foreach (var item in Model.NegativeData.Where(x => x.Code != null))
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Code, "", new { id = item.Code },
+ new { title = " pChange: " + item.pChange + " lastPrice: " + item.lastPrice + " Open: " + item.Open + ", Low: " + item.Low + ", High: " + item.High + ", totalBuyQuantity: " + item.totalBuyQuantity + ", totalSellQuantity: " + item.totalSellQuantity + ", TotalVolume: " + item.TotalVolume })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>High Selling</thead>
+                @foreach (var item in Model.HighSelling.Where(x => x.Code != null))
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Code, "", new { id = item.Code },
+ new { title = " lastPrice: " + item.lastPrice + " totalBuyQuantity: " + item.totalBuyQuantity + ", totalSellQuantity: " + item.totalSellQuantity + ", Percentage: " + item.Percentage + ", pChange: " + item.pChange + ", Open: " + item.Open + ", Low: " + item.Low + ", High: " + item.High + ", TotalVolume: " + item.TotalVolume })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Week-Strong</thead>
+                @foreach (var item in Model.CheckPriceWeekOIStroing)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.CompanyCode, "", new { id = item.CompanyCode },
+ new { title = " PChange: " + item.PChange + ", PchangeinOpenInterest: " + item.PchangeinOpenInterest })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Week-Week</thead>
+                @foreach (var item in Model.CheckPriceWeekIOWeek)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.CompanyCode, "", new { id = item.CompanyCode },
+ new { title = "PChange: " + item.PChange + ", PchangeinOpenInterest: " + item.PchangeinOpenInterest })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+
+
+
+
+
+
+
+        @*<td style="vertical-align:top">
+                       <table>
+                           <thead>DMA-1</thead>
+                           @foreach (var item in Model.CheckLTPHasFirstPlace)
+                           {
+                               <tr>
+                                   <td>
+                                       @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+            new { title = "UniqueString: " + item.UniqueString })
+                                   </td>
+
+                               </tr>
+                           }
+
+                       </table>
+                   </td>
+                   <td style="vertical-align:top">
+                       <table>
+                           <thead>DMA-2</thead>
+                           @foreach (var item in Model.CheckLTPHasSecondPlace)
+                           {
+                               <tr>
+                                   <td>
+                                       @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+            new { title = "UniqueString: " + item.UniqueString })
+                                   </td>
+
+                               </tr>
+                           }
+
+                       </table>
+                   </td>
+                   <td style="vertical-align:top">
+                       <table>
+                           <thead>DMA-Change</thead>
+                           @foreach (var item in Model.UIDetailedDMA)
+                           {
+                               <tr>
+                                   <td>
+                                       @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+            new { title = "LTPValue: " + item.LTPValue + ", RankSavedTimeStamp: " + item.RankSavedTimeStamp })
+                                   </td>
+
+                               </tr>
+                           }
+
+                       </table>
+                   </td>*@
+    </tr>
+</table>

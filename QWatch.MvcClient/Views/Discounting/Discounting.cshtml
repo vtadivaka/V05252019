@@ -1,0 +1,142 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+<table id="posativeDataTable">
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+
+                        <td>
+                            @Html.Raw("Expected") 
+                        </td>
+
+                        @*<td>
+                            @Html.Raw("IsBasicMaxValueClose") 
+                        </td>
+
+                        <td>
+                            @Html.Raw("IsBasicMaxValuePreviousClose") 
+                        </td>*@
+
+
+                        <td>
+                            @Html.Raw("CompanyCode") (@Html.Raw("DiscountPrice"))
+                        </td>
+                        <td>
+                            @Html.Raw("BasicPercentChange") / @Html.Raw("IOPercentChange")
+                        </td>
+                        <td>
+                            @Html.Raw("BasicClosed") / @Html.Raw("IOClosed")
+                        </td>
+                        <td>
+                            @Html.Raw("BasicLtp") / @Html.Raw("IOLtp")
+                        </td>
+                        <td>
+                            @Html.Raw("BasicPreviousClose") / @Html.Raw("IOPreviousClose")
+                        </td>
+                        <td>
+                            @Html.Raw("BasicOpenPrice") / @Html.Raw("IOOpenPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("BasicHighPrice") / @Html.Raw("IOHighPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("BasicLowPrice") / @Html.Raw("IOLowPrice")
+                        </td>
+                       
+                    </tr>
+
+                </thead>
+
+                @foreach (var item in Model.DiscountData.Where(x => x.CompanyCode != null))
+                {
+                    <tr>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.ExpectedChange)
+                        </td>
+                        @*<td style="background-color:darkgray">
+                            @Html.Raw(item.IsBasicMaxValueClose)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.IsBasicMaxValuePreviousClose)
+                        </td>*@
+
+
+                        <td style="background-color:darkgray">
+
+                            @Html.ActionLink(item.CompanyCode, "Index", "List", new { id = item.CompanyCode },null) (@Html.Raw(item.DiscountPrice))
+                        </td>
+
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicPercentChange) / @Html.Raw(item.IOPercentChange)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicClosed) / @Html.Raw(item.IOClosed)
+                        </td>
+
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicLtp) / @Html.Raw(item.IOLtp)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicPreviousClose) / @Html.Raw(item.IOPreviousClose)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicOpenPrice) / @Html.Raw(item.IOOpenPrice)
+                        </td><td style="background-color:darkgray">
+                            @Html.Raw(item.BasicHighPrice) / @Html.Raw(item.IOHighPrice)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicLowPrice) / @Html.Raw(item.IOLowPrice)
+                        </td>
+                       
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+</table>

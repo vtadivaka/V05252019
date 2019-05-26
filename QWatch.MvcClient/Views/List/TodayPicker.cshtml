@@ -1,0 +1,153 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+
+<h2>Posative Data</h2>
+<table id="posativeDataTable">
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            @Html.Raw("Time")
+                        </td>
+                        <td>
+                            @Html.Raw("lastPrice")
+                        </td>
+                        <td>
+                            @Html.Raw("Open")
+                        </td>
+                        <td>
+                            @Html.Raw("Low")
+                        </td>
+                        <td>
+                            @Html.Raw("High")
+                        </td>
+                        <td>
+                            @Html.Raw("totalBuyQuantity")
+                        </td>
+                        <td>
+                            @Html.Raw("totalSellQuantity")
+                        </td>
+                        <td>
+                            @Html.Raw("Volume")
+                        </td>
+                        <td>
+                            @Html.Raw("Percentage")
+                        </td>
+                        <td>
+                            @Html.Raw("TotalVolume")
+                        </td>
+                        <td>
+                            @Html.Raw("VolumePercentage")
+                        </td>
+                        <td>
+                            @Html.Raw("fastPercentage")
+                        </td>
+
+                        <td>
+                            @Html.Raw("Code")
+                        </td>
+                        <td>
+                            @Html.Raw("Id")
+                        </td>
+                    </tr>
+
+                </thead>
+
+                @foreach (var item in Model.PosativeData.Where(x => x.Code != null))
+                {
+                    <tr>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.BasicSavedTimeStamp)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.lastPrice)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.Open)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.Low)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.High)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.totalBuyQuantity)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.totalSellQuantity)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.TotalVolume)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.pChange)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.CalcDayVolume)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.CurrentPrevdayVolumePercentage)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.fastPercentage)
+                        </td>
+                        <td style="background-color:darkgray">
+                            @Html.ActionLink(item.Code, "Index", "List", new { id = item.Code }, new { target = "_blank" })                        </td>
+
+                        <td style="background-color:darkgray">
+                            @Html.Raw(item.Id)
+                        </td>
+
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+</table>

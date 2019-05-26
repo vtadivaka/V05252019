@@ -1,0 +1,40 @@
+﻿@using GridMvc.Html
+@model IEnumerable<EntityData.Query>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+    
+</head>
+<body>
+   
+    <hr />
+    <div>
+ 
+    @Html.Grid(Model).Columns(columns =>
+{
+    /// columns.Add(c => c.QueryId).Titled("QueryId");
+    /// 
+    columns.Add(c => c.SectionName)
+     .Encoded(false)
+     .Sanitized(false)
+     .Titled("SectionName")
+     .RenderValueAs(o => Html.ActionLink(o.SectionName, "LibraryData", new { id = o.SectionId }, new { @class = "" }));
+   // columns.Add(c => c.SectionName).Titled("SectionName");
+    columns.Add(c => c.QueryName).Titled("QueryName");
+    columns.Add(c => c.Description).Titled("Description");
+    columns.Add(c => c.SCreatedDate).Titled("Date");
+    columns.Add()
+     .Encoded(false)
+     .Sanitized(false)
+     .SetWidth(30)
+     .RenderValueAs(o => Html.ActionLink("Edit", "ModifyQuery", new { id = o.QueryId }, new { @class = "btn btn-primary" }));
+    
+
+}).WithPaging(7).Sortable(true)
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿
+<div class="panel panel-default">
+
+    <ul id="menu">
+        <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+        <li><a href="#" (click)="getCurrentBn2()">Home(NextBn)</a></li>
+        <li><a href="#" (click)="getFinalBn()">FinalBN</a></li>
+        <li><a href="#" (click)="getNextN()">Nextn</a></li>
+        <li><a href="#" (click)="getRefreshData()">Refresh</a></li>
+    </ul>
+
+    <!-- Default panel contents -->
+    <div class='panel-heading'>
+        <h3> Products List</h3>
+    </div>
+    <div class='panel-body'>
+        <table class="table table-bordered table-condensed ">
+            <tr>
+                <th>ExpiryDate</th>
+                <th>TimeStamp</th>
+                <th>AsOnTime</th>
+                <th>Underlying</th>
+                <th>Per</th>
+
+                <th>total_cal_OI</th>
+                <th>total_put_OI</th>
+                <th>total_cal_ChnginOI</th>
+                <th>total_put_ChnginOI</th>
+                <th>total_cal_Volume</th>
+                <th>total_put_Volume</th>
+            </tr>
+            <tbody>
+                <tr *ngFor="let item of pagedItems">
+                    <td>{{item.expiryDate}}</td>
+                    <td>{{item.timeStamp}}</td>
+                    <td>{{item.asOnTime}}</td>
+                    <td>{{item.underlyingValue}}</td>
+                    <td>{{item.percentage}}</td>
+
+                    <td>{{item.total_cal_OI}}</td>
+                    <td>{{item.total_put_OI}}</td>
+                    <td>{{item.total_cal_ChnginOI }}</td>
+                    <td>{{item.total_put_ChnginOI}}</td>
+                    <td>{{item.total_cal_Volume }}</td>
+                    <td>{{item.total_put_Volume }}</td>
+                <tr>
+            </tbody>
+        </table>
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.totalPages)">Last</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,212 @@
+﻿@model Entity.QueryBinder
+<style>
+    table {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+
+        table th {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #999999;
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dcddc0;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #999999;
+            align-items: flex-start;
+        }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var item in TempData["Urls"] as List<string>)
+            {
+                <td>
+                    <div>
+                        <a target='_blank' href="@item.Split('#')[0]">@item.Split('#')[1]</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+
+<table>
+    <tr>
+        <td style="vertical-align:top">
+            <table>
+                <thead>DMA-1</thead>
+                @foreach (var item in Model.CheckLTPHasFirstPlace)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+ new { title = "UniqueString: " + item.UniqueString })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+        <td style="vertical-align:top">
+            <table>
+                <thead>DMA-2</thead>
+                @foreach (var item in Model.CheckLTPHasSecondPlace)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+ new { title = "UniqueString: " + item.UniqueString })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>DMA-7</thead>
+                @foreach (var item in Model.CheckLTPHasBeforeLastPlace)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+ new { title = "UniqueString: " + item.UniqueString })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>DMA-8</thead>
+                @foreach (var item in Model.CheckLTPHasLastPlace)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.SourceName, "", new { id = item.SourceName },
+ new { title = "UniqueString: " + item.UniqueString })
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </td>
+
+       
+
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Banknifty-Score(@ViewBag.BankNiftyScore)</thead>
+                @foreach (var item in Model.BankNiftyDMAData)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.SourceName + "(" + item.DMAScore + ")", "", new { id = item.SourceName })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        <td style="vertical-align:top">
+            <table>
+                <thead>Nifty-Total DMA Score(@ViewBag.NiftyScore)</thead>
+                @foreach (var item in Model.NiftyDMAData)
+                {
+                    <tr>
+                        <td >
+                            @Html.ActionLink(item.SourceName + "(" + item.DMAScore + ")", "", new { id = item.SourceName })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+<td style="vertical-align:top">
+            <table>
+                <thead></thead>
+                <tr>
+                    <td >
+                     Change in today   (+)@ViewBag.PosativeChangeIndexScore (-)@ViewBag.NegativeChangeIndexScore = @ViewBag.ChangeIndexScore
+                    </td>
+                    <td >
+                        (N: @ViewBag.NegativeChangeScore)   (P: @ViewBag.PosativeChangeScore)
+                    </td>
+                </tr>
+
+                @foreach (var item in Model.UIDetailedDMA)
+                {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.SourceName + "(" + item.ChangeScore + ")", "", new { id = item.SourceName },
+ new { title = "LTPValue: " + item.LTPValue + ", RankSavedTimeStamp: " + item.RankSavedTimeStamp })
+                    </td>
+
+
+                    @foreach (var newitem in item.ItemBasedChange.Split('#').ToArray())
+                    {
+                        if (newitem.Split(',').Length > 1)
+                        {
+                            if (newitem.Split(',')[0].Trim() == "+")
+                            {
+                                if (newitem.Split(',')[1].Trim() == "5" || newitem.Split(',')[1].Trim() == "10" || newitem.Split(',')[1].Trim() == "20")
+                                {
+                                    <td style="background-color:blue; ">
+                                        @Html.Raw(newitem.Split(',')[1].Trim())
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="background-color:blue;">
+                                        @Html.Raw(newitem.Split(',')[1].Trim())
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                if (newitem.Split(',')[1].Trim() == "5" || newitem.Split(',')[1].Trim() == "10" || newitem.Split(',')[1].Trim() == "20")
+                                {
+                                    <td style="background-color:red;">
+                                        @Html.Raw(newitem.Split(',')[1].Trim())
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="background-color:red;">
+                                        @Html.Raw(newitem.Split(',')[1].Trim())
+                                    </td>
+                                }
+
+                            }
+                        }
+                    }
+                </tr>
+                }
+
+            </table>
+
+        </td>
+    </tr>
+</table>
